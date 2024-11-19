@@ -4,7 +4,7 @@ from tqdm import tqdm
 from IPython.display import clear_output
 import matplotlib.pyplot as plt
 
-from models_CondRefine import CondRefineNetDilated
+from models.models_CondRefine import CondRefineNetDilated
 
 from torchvision.utils import make_grid
 import os
