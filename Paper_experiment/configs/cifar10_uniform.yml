@@ -1,0 +1,45 @@
+training:
+  batch_size: 128
+  n_epochs: 500000
+  n_iters: 150001
+  snapshot_freq: 2000
+  snapshot_sampling: true
+  anneal_power: 2
+
+sampling:
+  batch_size: 1000
+  step_lr: 0.0000062
+  n_steps_each: 5
+  ckpt_id: 200000
+  final_only: true
+  fid: true
+  denoise: true
+  num_samples4fid: 10000
+
+data:
+  dataset: "CIFAR10"
+  image_size: 32
+  channels: 3
+  logit_transform: false
+  random_flip: true
+  rescaled: false
+  num_workers: 4
+
+model:
+  sigma_begin: 1
+  num_classes: 200
+  ema: true
+  ema_rate: 0.999
+  sigma_dist: uniform
+  sigma_end: 0.01
+  normalization: InstanceNorm++
+  nonlinearity: elu
+  ngf: 128
+
+optim:
+  weight_decay: 0.000
+  optimizer: "Adam"
+  lr: 0.0001
+  beta1: 0.9
+  amsgrad: false
+  eps: 0.00000001
