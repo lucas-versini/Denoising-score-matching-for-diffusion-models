@@ -3,7 +3,7 @@
     - `plot_utils.py`: functions to plot scores, Langevin dynamics, densities (empirical ones and true ones).
 
 - `notebooks` folder:
-    - `denoising_GMM.ipynb`: train a very basic model to learn the score of a GMM (using directly the expression of the score).
+    - `score_matching.ipynb`: train a very basic model to learn the score of a Gaussian Mixture Model or a banana-shaped density (using directly the expression of the score), either with Denoising Score Matching or Sliced Score Matching.
     - `langevin_dynamics.ipynb`: sample from the score of a GMM, either using basic Langevin dynamics, or annealed Langevin dynamics.
 
 **Remarques:**
