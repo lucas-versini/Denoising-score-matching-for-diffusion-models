@@ -5,6 +5,3 @@
 - `notebooks` folder:
     - `score_matching.ipynb`: train a very basic model to learn the score of a Gaussian Mixture Model or a banana-shaped density (using directly the expression of the score), either with Denoising Score Matching or Sliced Score Matching.
     - `langevin_dynamics.ipynb`: sample from the score of a GMM, either using basic Langevin dynamics, or annealed Langevin dynamics.
-
-**Remarques:**
-- `langevin_dynamics.ipynb`: comme dit dans le papier, avec un simple Langevin dynamics on ne retrouve pas les bons poids pour un mélange gaussien. En revanche, en utilisant annealed Langevin dynamics, ça marche bien mieux. J'ai aussi essayé d'utiliser une sorte de Metropolis-Hastings, mais ça ne fonctionne pas... Le code traîne dans `density_utils.py`, mais si on ne le fait pas marcher on l'enlèvera.
