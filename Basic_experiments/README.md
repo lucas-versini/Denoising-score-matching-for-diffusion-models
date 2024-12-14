@@ -7,7 +7,7 @@ This folder contains scripts and notebooks for experimenting with various sampli
 ### `utils` folder
 
 - `density_utils.py`
-  Functions for Gaussian Mixture Models (density, log density, score, sampling), and functions for Langevin dynamics.
+  Functions for Gaussian Mixture Models and "banana-shaped" density (density, log density, score, sampling), and functions for Langevin dynamics.
 
 - `plot_utils.py`
   Functions to plot scores, Langevin dynamics, and densities (both empirical and true ones).
