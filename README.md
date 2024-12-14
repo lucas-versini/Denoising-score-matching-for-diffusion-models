@@ -6,4 +6,4 @@ This repository contains the code to run the experiments from our project report
 
 - The folder `Basic_experiments` contains scripts and notebooks to understand Langevin dynamics, annealed Langevin dynamics, Sliced Score Matching and Denoising Score Matching on toy datasets, such as Gaussian Mixture Models.
 
-- The folder `Paper_experiments` contains ...
+- The folder `Paper_experiments` contains scripts and notebooks to experiment on [Generative Modeling by Estimating Gradients of the Data Distribution](https://arxiv.org/abs/1907.05600) by Yang Song and Stefano Ermon. The implemented datasets are MNIST, CIFAR-10 and the Oxford-IIIT Pet Dataset.
