@@ -1,10 +1,10 @@
-# Sampling and Score Matching Techniques
+# Sampling and score matching techniques
 
 This folder contains scripts and notebooks for experimenting with various sampling and score matching techniques, including **Langevin Sampling**, **Denoising Score Matching**, and **Sliced Score Matching**.
 
-## Folder Structure
+## Folder structure
 
-### `utils` Folder
+### `utils` folder
 
 - `density_utils.py`
   Functions for Gaussian Mixture Models (density, log density, score, sampling), and functions for Langevin dynamics.
@@ -12,7 +12,7 @@ This folder contains scripts and notebooks for experimenting with various sampli
 - `plot_utils.py`
   Functions to plot scores, Langevin dynamics, and densities (both empirical and true ones).
 
-### `notebooks` Folder
+### `notebooks` folder
 
 - `score_matching.ipynb`
   Train a basic model to learn the score of a Gaussian Mixture Model or a banana-shaped density (using the analytical expression of the score) with **Denoising Score Matching** or **Sliced Score Matching**.
