@@ -1,7 +1,7 @@
 - `utils` folder:
-    - `density_utils.py`: functions for Gaussian Mixture Models (density, log density, score, sampling), functions for Langevin dynamics (which should be put somewhere else I guess).
+    - `density_utils.py`: functions for Gaussian Mixture Models (density, log density, score, sampling), functions for Langevin dynamics.
     - `plot_utils.py`: functions to plot scores, Langevin dynamics, densities (empirical ones and true ones).
 
 - `notebooks` folder:
-    - `score_matching.ipynb`: train a very basic model to learn the score of a Gaussian Mixture Model or a banana-shaped density (using directly the expression of the score), either with Denoising Score Matching or Sliced Score Matching.
+    - `score_matching.ipynb`: train a basic model to learn the score of a Gaussian Mixture Model or a banana-shaped density (using directly the expression of the score), either with Denoising Score Matching or Sliced Score Matching.
     - `langevin_dynamics.ipynb`: sample from the score of a GMM, either using basic Langevin dynamics, or annealed Langevin dynamics.
