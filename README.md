@@ -2,7 +2,7 @@
 
 ## Manon Gouttefangeas, Mohammed Raki, Lucas Versini
 
-This repository contains the code to run the experiments from our project report for the course "Probabilistic Graphical Models and Deep Generative Models".
+This repository contains the code to run the experiments from our project report for the course [Introduction to Probabilistic Graphical Models and Deep Generative Models](https://lmbp.uca.fr/~latouche/mva/IntroductiontoProbabilisticGraphicalModelsMVA.html).
 
 - The folder `Basic_experiments` contains scripts and notebooks to understand annealed Langevin dynamics and Denoising Score Matching on toy datasets, such as Gaussian Mixture Models.
 
