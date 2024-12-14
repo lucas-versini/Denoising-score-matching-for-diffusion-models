@@ -12,6 +12,10 @@ This folder contains scripts and notebooks for experimenting with various sampli
 - `plot_utils.py`
   Functions to plot scores, Langevin dynamics, and densities (both empirical and true ones).
 
+### `models` folder
+
+TODO
+
 ### `notebooks` folder
 
 - `score_matching.ipynb`
