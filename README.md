@@ -1,4 +1,4 @@
-# Denoising-score-matching-for-diffusion-models
+# Denoising score matching for diffusion models
 
 ## Manon Gouttefangeas, Mohammed Raki, Lucas Versini
 
