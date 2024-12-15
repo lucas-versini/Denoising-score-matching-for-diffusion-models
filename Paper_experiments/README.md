@@ -16,7 +16,8 @@ by Yang Song and Stefano Ermon.
 To install the required dependencies, run:
 
 ```bash
-pip install -r requirements.txt```
+pip install -r requirements.txt
+```
 
 ## Folder structure
 
