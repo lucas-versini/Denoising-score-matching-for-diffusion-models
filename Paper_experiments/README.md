@@ -33,7 +33,7 @@ Added a script to compute the FID score for pre-generated images.
 - `config` folder
 Contains several configuration files for different experiments. More details are provided at the beginning of each file.
 
-## How to Use
+## How to use
 
 To train a model on the MNIST dataset, run:
 
@@ -47,7 +47,7 @@ Once the model has been trained, you can generate samples by running:
 python main.py --sample --config MNIST.yml -i MNIST
 ```
 
-## Computing the FID Score
+## Computing the FID score
 
 To compute the FID score:
 
