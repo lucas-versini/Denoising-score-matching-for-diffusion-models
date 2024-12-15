@@ -21,20 +21,20 @@ pip install -r requirements.txt
 
 The folder names are fairly self-explanatory, and many scripts are similar to those in the original repositories. Here are some of the modifications we made:
 
-- `models/__init__.py`
+- `models/__init__.py`:
 Implemented additional schedulers for the sigma parameter.
 
-- `datasets/__init__.py`
+- `datasets/__init__.py`:
 Added support for the OxfordIIITPet dataset.
 
-- `FID.py`
+- `FID.py`:
 Added a script to compute the FID score for pre-generated images.
 
-- `config` folder
+- `config` folder:
 Contains several configuration files for different experiments. More details are provided at the beginning of each file.
 
-- `notebook` folder
-Contains a notebook to train a model using Denoising Score Matching. This notebook is a simplified version of the rest of the code. Its main goal is to simplify the code to make it understandable more easily, but it is much less efficient than the rest of the code.
+- `notebook` folder:
+- Contains a notebook to train a model using Denoising Score Matching. This notebook is a simplified version of the rest of the code. Its main goal is to simplify the code to make it understandable more easily, but it is much less efficient than the rest of the code.
 
 ## How to use
 
