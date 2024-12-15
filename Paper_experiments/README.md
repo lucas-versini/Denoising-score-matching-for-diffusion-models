@@ -57,7 +57,7 @@ To compute the FID score:
 
 - Modify `relative_path_to_folder1` and `relative_path_to_folder2` in FID.py.
 
-```Run:
-bash
+- Run:
+```bash
 python FID.py
 ```
