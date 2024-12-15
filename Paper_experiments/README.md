@@ -34,7 +34,7 @@ Added a script to compute the FID score for pre-generated images.
 Contains several configuration files for different experiments. More details are provided at the beginning of each file.
 
 - `notebook` folder:
-- Contains a notebook to train a model using Denoising Score Matching. This notebook is a simplified version of the rest of the code. Its main goal is to simplify the code to make it understandable more easily, but it is much less efficient than the rest of the code.
+Contains a notebook to train a model using Denoising Score Matching. This notebook is a simplified version of the rest of the code. Its main goal is to simplify the code to make it understandable more easily, but it is much less efficient than the rest of the code.
 
 ## How to use
 
