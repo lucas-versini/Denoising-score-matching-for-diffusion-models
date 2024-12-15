@@ -14,7 +14,7 @@ This folder contains scripts and notebooks for experimenting with various sampli
 
 ### `models` folder
 
-TODO
+Contains several scripts to define and train models, among which a basic neural network and a Noise Conditional Score Network (NCSN).
 
 ### `notebooks` folder
 
