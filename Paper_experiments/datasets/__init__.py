@@ -3,6 +3,40 @@ import torch
 import torchvision.transforms as transforms
 from torchvision.datasets import MNIST, CIFAR10, OxfordIIITPet
 
+class FilteredMNIST(Dataset):
+    def __init__(self, root, train=True, transform=None, target_label=5, reduction_ratio=0.35):
+        self.mnist = MNIST(root=root, train=train, download=True)
+        self.transform = transform
+
+        # Separate images and labels
+        data, targets = self.mnist.data, self.mnist.targets
+
+        # Filter the dataset for the target class
+        target_indices = (targets == target_label).nonzero(as_tuple=True)[0]
+        keep_target_count = int(len(target_indices) * reduction_ratio)
+        keep_target_indices = random.sample(target_indices.tolist(), keep_target_count)
+
+        # Keep the other classes
+        non_target_indices = (targets != target_label).nonzero(as_tuple=True)[0]
+
+        # Combine indices and create the filtered dataset
+        selected_indices = torch.cat((non_target_indices, torch.tensor(keep_target_indices)))
+        self.data = data[selected_indices]
+        self.targets = targets[selected_indices]
+
+    def __len__(self):
+        return len(self.data)
+
+    def __getitem__(self, idx):
+        img, target = self.data[idx], self.targets[idx]
+
+        img = Image.fromarray(img.numpy(), mode='L')
+
+        if self.transform:
+            img = self.transform(img)
+
+        return img, target
+
 def get_dataset(args, config):
     if config.data.random_flip is False:
         train_transform = transforms.Compose([
@@ -32,6 +66,13 @@ def get_dataset(args, config):
         train_dataset = MNIST(os.path.join(args.exp, 'datasets', 'mnist'),
                         train = True, download = True,
                         transform = train_transform)
+        test_dataset = MNIST(os.path.join(args.exp, 'datasets', 'mnist_test'),
+                                train = False, download = True,
+                                transform = test_transform)
+    elif config.data.dataset == 'FilteredMNIST':
+        train_dataset = FilteredMNIST(os.path.join(args.exp, 'datasets', 'mnist'),
+                                      train = True,
+                                      transform = train_transform)
         test_dataset = MNIST(os.path.join(args.exp, 'datasets', 'mnist_test'),
                                 train = False, download = True,
                                 transform = test_transform)
