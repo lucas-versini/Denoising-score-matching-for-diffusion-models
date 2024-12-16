@@ -25,7 +25,7 @@ The folder names are fairly self-explanatory, and many scripts are similar to th
 Implemented additional schedulers for the sigma parameter.
 
 - `datasets/__init__.py`:
-Added support for the OxfordIIITPet dataset.
+Added support for the OxfordIIITPet dataset, and for the unbalanced MNIST dataset.
 
 - `FID.py`:
 Added a script to compute the FID score for pre-generated images.
