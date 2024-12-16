@@ -1,3 +1,5 @@
+# MNIST dataset, geometric sequence of noises
+
 training:
   batch_size: 256
   n_epochs: 500000
