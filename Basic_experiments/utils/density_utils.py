@@ -127,7 +127,7 @@ def gaussian_mixture_model_log_density(x, weights, means, covariances):
     return log_density
 
 
-# Banana distribution
+# Banana distribution : an additional to example
 
 def banana_density(x, b = 0.5):
     x_ = np.copy(x)
@@ -178,9 +178,10 @@ def langevin_sampling(x, score_function, n_samples, coefficient = 1e-4, T = 300)
                         + np.sqrt(coefficient) * z
     return all_x
 
+#Metropolis Hastings correction for Langevin dynamics
 def langevin_metropolis_hastings_sampling(x, score_function, log_density_function, n_samples, step, T = 100):
     """
-    Sample from the Langevin Metropolis-Hastings dynamics.
+    Sample from the corrected Langevin Metropolis-Hastings dynamics.
 
     Parameters
     x : array, shape (2,)
@@ -230,6 +231,8 @@ def annealed_langevin_dynamics(x, score_function, n_samples, sigmas, epsilon = 1
         Number of samples to generate.
     T : int, optional
         Number of iterations.
+    epsilon : double
+        Step size for ajusting the noise level.
     n_steps : int, optional
         Number of steps.
     

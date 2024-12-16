@@ -8,6 +8,22 @@ import matplotlib as mpl
 from sklearn.neighbors import KernelDensity
 
 def plot_real_predicted_scores(samples, scores, predicted_scores, model, device, weights, means, covariances):
+    """
+    Visualizes and compares real and predicted scores for a dataset, along with error analysis.
+
+    Args:
+        samples (np.ndarray): Array of sampled data points, shape (n_samples, 2).
+        scores (np.ndarray): True score vectors for the samples, shape (n_samples, 2).
+        predicted_scores (np.ndarray): Predicted score vectors for the samples, shape (n_samples, 2).
+        model (torch.nn.Module): PyTorch model used to compute predicted scores on a grid.
+        device (torch.device): Device (CPU/GPU) where the model computations are performed.
+        weights (np.ndarray): Weights of the Gaussian components in the GMM, shape (n_components,).
+        means (np.ndarray): Means of the Gaussian components in the GMM, shape (n_components, 2).
+        covariances (np.ndarray): Covariance matrices of the Gaussian components in the GMM, 
+                                  shape (n_components, 2, 2).
+    """
+
+
     # Plot the real and predicted scores on two separate plots
     plt.figure(figsize = (12, 4))
 
@@ -77,6 +93,18 @@ def plot_real_predicted_scores(samples, scores, predicted_scores, model, device,
     plt.show()
 
 def plot_langevin_trajectory(x_history, score_function, x_min = None, x_max = None, y_min = None, y_max = None, *args):
+    """ 
+    Visualizes the trajectories of Langevin dynamics overlaid on the magnitude of the score function.
+
+    Args:
+        x_history (np.ndarray): Array of sampled trajectories, shape (T + 1, n_samples, 2).
+        score_function (callable): Function that computes the score at given points.
+        x_min (float, optional): Minimum x-coordinate for the plot. Defaults to dynamic range of x_history.
+        x_max (float, optional): Maximum x-coordinate for the plot. Defaults to dynamic range of x_history.
+        y_min (float, optional): Minimum y-coordinate for the plot. Defaults to dynamic range of x_history.
+        y_max (float, optional): Maximum y-coordinate for the plot. Defaults to dynamic range of x_history.
+        *args: Additional arguments passed to the score function.
+    """
     x_min = x_history[:, :, 0].min() - 3 if x_min is None else x_min
     x_max = x_history[:, :, 0].max() + 3 if x_max is None else x_max
     y_min = x_history[:, :, 1].min() - 3 if y_min is None else y_min
@@ -104,6 +132,18 @@ def plot_langevin_trajectory(x_history, score_function, x_min = None, x_max = No
     plt.show()
 
 def plot_empirical_true_density(x_samples, density_function, x_min = None, x_max = None, y_min = None, y_max = None, smooth = False):
+    """
+        Visualizes the empirical and true density of a dataset on a 2D grid.
+
+        Args:
+            x_samples (np.ndarray): Array of sample points, shape (n_samples, 2).
+            density_function (callable): Function to compute the true density at given points.
+            x_min (float, optional): Minimum x-coordinate for the plot. Defaults to dynamic range of `x_samples`.
+            x_max (float, optional): Maximum x-coordinate for the plot. Defaults to dynamic range of `x_samples`.
+            y_min (float, optional): Minimum y-coordinate for the plot. Defaults to dynamic range of `x_samples`.
+            y_max (float, optional): Maximum y-coordinate for the plot. Defaults to dynamic range of `x_samples`.
+            smooth (bool, optional): Whether to smooth the empirical density using kernel density estimation (KDE). Defaults to `False`.
+    """
     # Create a grid
     x_min = x_samples[:, 0].min() - 3 if x_min is None else x_min
     x_max = x_samples[:, 0].max() + 3 if x_max is None else x_max
