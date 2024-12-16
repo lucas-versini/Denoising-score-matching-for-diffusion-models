@@ -1,3 +1,5 @@
+# CIFAR-10 dataset, linear sequence of noises
+
 training:
   batch_size: 128
   n_epochs: 500000
