@@ -34,6 +34,23 @@ class BasicNetwork(nn.Module):
 
 # Noise Conditional Score Network using the CondRefineNetDilated architecture
 class NCSN(nn.Module):
+    """
+    Noise Conditional Score Network (NCSN) using the CondRefineNetDilated architecture.
+
+    Args:
+        n_channels (int): Number of input channels (e.g., 1 for grayscale images). Defaults to 1.
+        num_classes (int): Number of noise levels (classes) for conditioning. Defaults to 10.
+        ngf (int): Number of generator filters in the first convolutional layer. Defaults to 64.
+        image_size (int): Height and width of the input images. Defaults to 28.
+        device (str): Device to run the model ('cpu' or 'cuda'). Defaults to 'cpu'.
+
+    Methods:
+        forward(): 
+            Performs a forward pass, computing scores for the given inputs.
+        sample(): 
+            Generates samples using annealed Langevin dynamics, with optional intermediate saving.
+    """
+
     def __init__(self, n_channels = 1, num_classes = 10, ngf = 64, image_size = 28, device = 'cpu'):
         super().__init__()
 
@@ -67,6 +84,16 @@ class NCSN(nn.Module):
         return x.cpu()
 
 def image_samples(refine_net, sigmas, epoch, save_path, n_samples = 10):
+    """
+    Generates and saves image samples from a refinement network at a given training epoch.
+
+    Args:
+        refine_net (nn.Module): The refinement network used for sampling.
+        sigmas (torch.Tensor): Noise levels for sampling.
+        epoch (int): Current training epoch.
+        save_path (str): Directory to save the generated samples.
+        n_samples (int, optional): Number of samples to generate. Default set to 10.
+    """
     n_samples = 10
 
     refine_net.eval()
@@ -95,6 +122,22 @@ def image_samples(refine_net, sigmas, epoch, save_path, n_samples = 10):
         plt.savefig(path + "/samples_" + str(epoch) + "_" + str(i) + ".png")
 
 def train_NCSN(model, train_loader, n_epochs, lr, sigmas, device, save_path = '', save_freq = 20, visualize = True, do_samples = False):
+    """
+    Trains a Noise Conditional Score Network (NCSN) using noisy data augmentation.
+
+    Args:
+        model (nn.Module): NCSN model to train.
+        train_loader (DataLoader): DataLoader for the training dataset.
+        n_epochs (int): Number of training epochs.
+        lr (float): Learning rate for the optimizer.
+        sigmas (torch.Tensor): Noise levels for data augmentation.
+        device (str): Device to run training on ('cpu' or 'cuda').
+        save_path (str, optional): Directory to save model checkpoints and samples. Defaults to ''.
+        save_freq (int, optional): Frequency (in epochs) to save checkpoints. Defaults to 20.
+        visualize (bool, optional): Whether to visualize training loss. Defaults to True.
+        do_samples (bool, optional): Whether to generate and save samples during training. Defaults to False.
+    """
+
     model.to(device)
     model.train()
 
