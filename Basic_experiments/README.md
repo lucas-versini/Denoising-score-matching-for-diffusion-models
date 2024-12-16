@@ -1,25 +1,9 @@
-# Sampling and score matching techniques
+# Denoising score matching for diffusion models
 
-This folder contains scripts and notebooks for experimenting with various sampling and score matching techniques, including **Langevin Sampling**, **Denoising Score Matching**, and **Sliced Score Matching**.
+## Manon Gouttefangeas, Mohammed Raki, Lucas Versini
 
-## Folder structure
+This repository contains the code to run the experiments from our project report for the course [Introduction to Probabilistic Graphical Models and Deep Generative Models](https://lmbp.uca.fr/~latouche/mva/IntroductiontoProbabilisticGraphicalModelsMVA.html).
 
-### `utils` folder
+- The folder `Basic_experiments` contains scripts and notebooks to understand Langevin dynamics, annealed Langevin dynamics, Sliced Score Matching and Denoising Score Matching on toy datasets, such as Gaussian Mixture Models.
 
-- `density_utils.py`
-  Functions for Gaussian Mixture Models and "banana-shaped" density (density, log density, score, sampling), and functions for Langevin dynamics.
-
-- `plot_utils.py`
-  Functions to plot scores, Langevin dynamics, and densities (both empirical and true ones).
-
-### `models` folder
-
-Contains several scripts to define and train models, among which a basic neural network and a Noise Conditional Score Network (NCSN).
-
-### `notebooks` folder
-
-- `score_matching.ipynb`
-  Train a basic model to learn the score of a Gaussian Mixture Model or a banana-shaped density (using the analytical expression of the score) with **Denoising Score Matching** or **Sliced Score Matching**.
-
-- `langevin_dynamics.ipynb`
-  Sample from the score of a Gaussian Mixture Model using either **basic Langevin dynamics** or **annealed Langevin dynamics**.
+- The folder `Paper_experiments` contains scripts and notebooks to experiment on [Generative Modeling by Estimating Gradients of the Data Distribution](https://arxiv.org/abs/1907.05600) by Yang Song and Stefano Ermon. The supported datasets are MNIST, CIFAR-10 and the Oxford-IIIT Pet Dataset.
