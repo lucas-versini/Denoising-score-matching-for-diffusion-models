@@ -1,5 +1,7 @@
 import torch
 
+""" This script contains the definition of the loss for Denoising Score Matching (DSM) """
+
 def anneal_dsm_score_estimation(scorenet, samples, sigmas, anneal_power = 2.):
     labels = torch.randint(0, len(sigmas), (samples.shape[0],), device = samples.device)
     sigmas_labels = sigmas[labels].view(samples.shape[0], *([1] * len(samples.shape[1:])))
