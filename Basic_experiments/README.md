@@ -2,6 +2,8 @@
 
 This folder contains scripts and notebooks for experimenting with various sampling and score matching techniques, including **Langevin Sampling**, **Denoising Score Matching**, and **Sliced Score Matching**.
 
+As explained in the report, Lucas Versini wrote the initial versions of the notebooks present in this folder. Manon Gouttefangeas later improved part of the code. Manon Gouttefangeas, Mohammed Raki and Lucas Versini all corrected bugs and ran experiments.
+
 ## Folder structure
 
 ### `utils` folder
