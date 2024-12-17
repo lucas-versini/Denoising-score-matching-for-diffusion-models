@@ -1,5 +1,7 @@
 import torch.nn as nn
 
+""" This script defines Exponential Moving Average, which helps stabilize the model """
+
 class EMAHelper(object):
     def __init__(self, mu=0.999):
         self.mu = mu
