@@ -7,6 +7,9 @@ The content of this folder is adapted from the following GitHub repositories:
 
 These repositories implement the article: **[Generative Modeling by Estimating Gradients of the Data Distribution](https://arxiv.org/abs/1907.05600)**  by Yang Song and Stefano Ermon.
 
+This part of the project was primarily handled by Lucas Versini, who wrote most of the modifications for the experiments.
+All three students contributed ideas for experiments and datasets. However, due to computational constraints, Lucas Versini conducted the majority of the experiments on MNIST and CIFAR-10.
+
 ---
 
 ## Installation
