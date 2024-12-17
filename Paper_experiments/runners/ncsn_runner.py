@@ -17,6 +17,8 @@ from models.ema import EMAHelper
 
 __all__ = ['NCSNRunner']
 
+""" This script contains the training and sampling procedures """
+
 def get_model(config):
     if config.data.dataset in ['CIFAR10', 'MNIST', 'OxfordPets']:
         return NCSNv2(config).to(config.device)
@@ -29,6 +31,9 @@ class NCSNRunner():
         os.makedirs(args.log_sample_path, exist_ok = True)
 
     def train(self):
+        """ Training function """
+
+        # Get the datasets and dataloaders
         dataset, test_dataset = get_dataset(self.args, self.config)
         dataloader = DataLoader(dataset, batch_size = self.config.training.batch_size, shuffle = True,
                                 num_workers = self.config.data.num_workers)
@@ -40,6 +45,7 @@ class NCSNRunner():
 
         score = torch.nn.DataParallel(get_model(self.config))
 
+        # Get the optimizer
         optimizer = get_optimizer(self.config, score.parameters())
 
         start_epoch = 0
@@ -59,10 +65,12 @@ class NCSNRunner():
 
                 X = X.to(self.config.device)
 
+                # Compute the loss for the current X
                 loss = anneal_dsm_score_estimation(score, X, sigmas, self.config.training.anneal_power)
 
                 logging.info("step: {}, loss: {}".format(step, loss.item()))
 
+                # Optimize the parameters to reduce the loss
                 optimizer.zero_grad()
                 loss.backward()
                 optimizer.step()
@@ -74,11 +82,13 @@ class NCSNRunner():
                     return
 
                 if step % 100 == 0:
+                    # Use EMA: update the model
                     if self.config.model.ema:
                         test_score = ema_helper.ema_copy(score)
                     else:
                         test_score = score
 
+                    # Test the model
                     test_score.eval()
                     try:
                         test_X, _ = next(test_iter)
@@ -109,6 +119,7 @@ class NCSNRunner():
                     # torch.save(states, os.path.join(self.args.log_path, 'checkpoint_{}.pth'.format(step)))
                     torch.save(states, os.path.join(self.args.log_path, 'checkpoint.pth'))
 
+                    # Create some samples during training
                     if self.config.training.snapshot_sampling:
                         if self.config.model.ema:
                             test_score = ema_helper.ema_copy(score)
@@ -142,6 +153,9 @@ class NCSNRunner():
                         del all_samples
 
     def sample(self):
+        """ Sampling function to use once the model is trained """
+
+        # Get the model. -1 in the config file corresponds to the model 'checkpoint.pth'
         if self.config.sampling.ckpt_id == -1:
             states = torch.load(os.path.join(self.args.log_path, 'checkpoint.pth'), map_location=self.config.device)
         else:
@@ -159,23 +173,29 @@ class NCSNRunner():
             ema_helper.load_state_dict(states[-1])
             ema_helper.ema(score)
 
+        # Get the noise sequence
         sigmas_th = get_sigmas(self.config)
         sigmas = sigmas_th.cpu().numpy()
 
         score.eval()
 
         if not self.config.sampling.fid:
+            # Generate pictures meant to be seen
+            
+            # Starting point
             init_samples = torch.rand(self.config.sampling.batch_size, self.config.data.channels,
                                         self.config.data.image_size, self.config.data.image_size,
                                         device=self.config.device)
 
+            # Annealed Langevin dynamics
             all_samples = anneal_Langevin_dynamics(init_samples, score, sigmas,
                                                     self.config.sampling.n_steps_each,
                                                     self.config.sampling.step_lr, verbose=True,
                                                     final_only=self.config.sampling.final_only,
                                                     denoise=self.config.sampling.denoise)
-            
+
             if not self.config.sampling.final_only:
+                # Generate and save intermediate (noisy) pictures
                 for i, sample in tqdm.tqdm(enumerate(all_samples), total=len(all_samples),
                                             desc="saving image samples"):
                     sample = sample.view(sample.shape[0], self.config.data.channels,
@@ -188,6 +208,7 @@ class NCSNRunner():
                     save_image(image_grid, os.path.join(self.args.image_folder, 'image_grid_{}.png'.format(i)))
                     torch.save(sample, os.path.join(self.args.image_folder, 'samples_{}.pth'.format(i)))
             else:
+                # Generate and save only final pictures
                 sample = all_samples[-1].view(all_samples[-1].shape[0], self.config.data.channels,
                                                 self.config.data.image_size,
                                                 self.config.data.image_size)
@@ -201,6 +222,8 @@ class NCSNRunner():
                                                 'samples_{}.pth'.format(self.config.sampling.ckpt_id)))
 
         else:
+            # Generate pictures meant to be used to compute FID for instance
+            
             total_n_samples = self.config.sampling.num_samples4fid
             n_rounds = total_n_samples // self.config.sampling.batch_size
 
