@@ -3,16 +3,22 @@ import torch
 import torchvision.transforms as transforms
 from torchvision.datasets import MNIST, CIFAR10, OxfordIIITPet
 
+""" This script contains functions to create the datasets """
+
 class FilteredMNIST(Dataset):
-    def __init__(self, root, train=True, transform=None, target_label=5, reduction_ratio=0.35):
-        self.mnist = MNIST(root=root, train=train, download=True)
+    """
+    Class to handle an unbalanced MNIST dataset.
+    """
+    def __init__(self, root, train = True, transform = None, target_label = 5, reduction_ratio = 0.35):
+        # target_label is the digit whose proportion is to be reduced; reduction_ratio is the proportion of images we keep for this digit.
+        self.mnist = MNIST(root=root, train = train, download = True)
         self.transform = transform
 
         # Separate images and labels
         data, targets = self.mnist.data, self.mnist.targets
 
         # Filter the dataset for the target class
-        target_indices = (targets == target_label).nonzero(as_tuple=True)[0]
+        target_indices = (targets == target_label).nonzero(as_tuple = True)[0]
         keep_target_count = int(len(target_indices) * reduction_ratio)
         keep_target_indices = random.sample(target_indices.tolist(), keep_target_count)
 
@@ -38,6 +44,9 @@ class FilteredMNIST(Dataset):
         return img, target
 
 def get_dataset(args, config):
+    """ Given the configuration, returns training and test datasets. """
+
+    # Create transformations
     if config.data.random_flip is False:
         train_transform = transforms.Compose([
             transforms.Resize(config.data.image_size),
@@ -55,6 +64,7 @@ def get_dataset(args, config):
         transforms.ToTensor()
         ])
 
+    # Create the datasets
     if config.data.dataset == 'CIFAR10':
         train_dataset = CIFAR10(os.path.join(args.exp, 'datasets', 'cifar10'),
                           train = True, download = True,
