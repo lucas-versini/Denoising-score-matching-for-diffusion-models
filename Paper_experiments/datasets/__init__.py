@@ -3,6 +3,10 @@ import torch
 import torchvision.transforms as transforms
 from torchvision.datasets import MNIST, CIFAR10, OxfordIIITPet
 
+import random
+from torch.utils.data import Dataset
+from PIL import Image
+
 """ This script contains functions to create the datasets """
 
 class FilteredMNIST(Dataset):
