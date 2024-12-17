@@ -3,6 +3,8 @@ from . import get_sigmas
 from .layers import *
 from .normalization import get_normalization
 
+""" Definition of the Noise Conditional Score Network (NCSN) model, using classes from layers.py """
+
 class NCSNv2(nn.Module):
     def __init__(self, config):
         super().__init__()
