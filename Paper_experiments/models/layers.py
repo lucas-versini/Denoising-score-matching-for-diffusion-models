@@ -4,7 +4,7 @@ import torch.nn.functional as F
 from .normalization import *
 from functools import partial
 
-""" This script contains the definions of several layers used in the Noise Conditional Score Network (NCSN) model """
+""" This script contains the definions of several layers used in the Noise Conditional Score Network (NCSN) model defined in ncsnv2.py """
 
 # Possibility to use different activation functions
 def get_act(config):
