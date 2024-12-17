@@ -1,6 +1,8 @@
 import torch
 import numpy as np
 
+""" This script defines the noise sequences, and the Annealed Langevin dynamics """
+
 def sigmoid(x):
     return 1 / (1 + np.exp(-x))
 
@@ -14,11 +16,16 @@ def get_sigmas(config):
         sigmas = torch.tensor(np.linspace(config.model.sigma_begin, config.model.sigma_end, config.model.num_classes)).float().to(config.device)
         
     elif config.model.sigma_dist == 'cosine':
+        # Cosine sequence
+
+        # a and b are chosen so that cos(a i + b) starts at sigma_begin and ends at sigma_end
         b = np.arccos(config.model.sigma_begin)
         a = np.arccos(config.model.sigma_end) - b
         sigmas = torch.tensor(np.cos(a * np.linspace(0, 1, config.model.num_classes) + b)).float().to(config.device)
 
     elif config.model.sigma_dist == 'sigmoid':
+        # Sigmoid sequence
+        
         sigmas = torch.tensor(config.model.sigma_begin + (config.model.sigma_end - config.model.sigma_begin) *
                               sigmoid(np.linspace(-4, 4, config.model.num_classes))).float().to(config.device)
         b = config.model.sigma_begin
@@ -33,6 +40,7 @@ def get_sigmas(config):
 @torch.no_grad()
 def anneal_Langevin_dynamics(x_mod, scorenet, sigmas, n_steps_each=200, step_lr=0.000008,
                              final_only=False, verbose=False, denoise=True):
+    """ Performs denoising score matching with the given samples and model. """
     images = []
 
     with torch.no_grad():
@@ -45,9 +53,12 @@ def anneal_Langevin_dynamics(x_mod, scorenet, sigmas, n_steps_each=200, step_lr=
                 print(f"{s} / {n_steps_each}")
                 grad = scorenet(x_mod, labels)
 
+                # Create the noise to be added
                 noise = torch.randn_like(x_mod)
                 grad_norm = torch.norm(grad.view(grad.shape[0], -1), dim=-1).mean()
                 noise_norm = torch.norm(noise.view(noise.shape[0], -1), dim=-1).mean()
+
+                # Add the noise to x
                 x_mod = x_mod + step_size * grad + noise * np.sqrt(step_size * 2)
 
                 image_norm = torch.norm(x_mod.view(x_mod.shape[0], -1), dim=-1).mean()
