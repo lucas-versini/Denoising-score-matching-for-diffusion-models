@@ -4,6 +4,9 @@ import torch.nn.functional as F
 from .normalization import *
 from functools import partial
 
+""" This script contains the definions of several layers used in the Noise Conditional Score Network (NCSN) model """
+
+# Possibility to use different activation functions
 def get_act(config):
     if config.model.nonlinearity.lower() == 'elu':
         return nn.ELU()
@@ -18,6 +21,7 @@ def get_act(config):
     else:
         raise NotImplementedError('activation function does not exist!')
 
+# The rest of the script defines blocks (convolutional, pooling, etc.) for the model
 
 def conv1x1(in_planes, out_planes, stride=1, bias=True):
     "1x1 convolution"
